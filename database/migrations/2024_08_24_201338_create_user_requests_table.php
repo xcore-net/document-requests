@@ -11,17 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_requests', function (Blueprint $table) {
+        Schema::create('client_requests', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('request_id');
+            $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('request_id');
             $table->enum('status',['pending','inProgress','completed','rejected']);
 
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('clients');
-            $table->foreign('user_id')->references('id')->on('requests');
-            $table->timestamps();
+            $table->foreign('client_id')->references('id')->on('clients');
+            $table->foreign('request_id')->references('id')->on('requests');
         });
     }
 

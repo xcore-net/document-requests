@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('filled_forms', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('form_id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('form_id');
+            $table->unsignedBigInteger('user_id');
 
             $table->timestamps();
             

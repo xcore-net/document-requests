@@ -16,8 +16,8 @@ class Form extends Model
         return $this->hasMany(FilledForm::class);
     }
 
-    public function files(): HasManyThrough
+    public function stages(): HasMany
     {
-        return $this->hasManyThrough(UploadedFile::class, FilledForm::class);
+        return $this->hasMany(Stage::class);
     }
 }

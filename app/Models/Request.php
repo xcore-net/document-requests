@@ -11,12 +11,13 @@ class Request extends Model
 {
     use HasFactory;
 
-    public function stages():HasMany{
-        return $this->hasMany(Request::class)->withPivot('order');
+    public function stages(): BelongsToMany
+    {
+        return $this->belongsToMany(Stage::class,'request_stages');
     }
 
     public function clients(): BelongsToMany
     {
-        return $this->belongsToMany(Request::class)->withPivot('status');
+        return $this->belongsToMany(Client::class,'client_requests');
     }
 }

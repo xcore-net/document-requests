@@ -13,18 +13,18 @@ class Client extends Model
 
     public function requests(): BelongsToMany
     {
-        return $this->belongsToMany(Request::class)->withPivot('status');
+        return $this->belongsToMany(Request::class,'client_requests');
     }
 
     public function bills(): BelongsToMany
     {
-        return $this->belongsToMany(Bill::class);
+        return $this->belongsToMany(Bill::class,'payments');
     }
     public function forms(): BelongsToMany
     {
         return $this->belongsToMany(Form::class);
     }  
-    public function files(): HasManyThrough
+    public function uploadedFiles(): HasManyThrough
     {
         return $this->hasManyThrough(UploadedFile::class, FilledForm::class);
     }

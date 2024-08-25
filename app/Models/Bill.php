@@ -11,11 +11,11 @@ class Bill extends Model
 {
     use HasFactory;
 
-    public function user(): BelongsToMany
+    public function clients(): BelongsToMany
     {
-        return $this->belongsToMany(Client::class);
+        return $this->belongsToMany(Client::class,'payments');
     }
-    public function stage(): HasMany
+    public function stages(): HasMany
     {
         return $this->hasMany(Stage::class);
     }

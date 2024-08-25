@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('request_stages', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('request_id');
-            $table->unsignedInteger('stage_id');
-            $table->unsignedInteger('order');
+            $table->unsignedBigInteger('request_id');
+            $table->unsignedBigInteger('stage_id');
+            $table->unsignedBigInteger('order');
 
 
             $table->timestamps();
