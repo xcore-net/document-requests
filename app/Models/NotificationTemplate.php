@@ -9,4 +9,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class NotificationTemplate extends Model
 {
     use HasFactory;
+
+    
 }

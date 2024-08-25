@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('uploaded_files', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('form_id');
+            $table->unsignedBigInteger('form_id');
             $table->string('name');
             $table->enum('type',['type1','type2']);
 

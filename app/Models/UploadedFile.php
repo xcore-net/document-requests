@@ -10,8 +10,4 @@ class UploadedFile extends Model
 {
     use HasFactory;
 
-    public function form(): BelongsTo
-    {
-        return $this->belongsTo(Form::class);
-    }
 }

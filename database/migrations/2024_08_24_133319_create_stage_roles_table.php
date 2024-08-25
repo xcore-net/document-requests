@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('stage_roles', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('stage_id');
-            $table->unsignedInteger('role_id');
+            $table->unsignedBigInteger('stage_id');
+            $table->unsignedBigInteger('role_id');
 
             $table->timestamps();
 
-            $table->foreign('stage')->references('id')->on('stages');
+            $table->foreign('stage_id')->references('id')->on('stages');
             $table->foreign('role_id')->references('id')->on('roles');
         });
     }

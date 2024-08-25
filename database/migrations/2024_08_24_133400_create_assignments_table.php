@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('assignments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('stage_id');
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('notification_id');
+            $table->unsignedBigInteger('stage_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('notification_id');
 
             $table->timestamps();
             $table->foreign('stage_id')->references('id')->on('stages');
