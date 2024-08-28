@@ -2,40 +2,33 @@
 
 namespace App\Models;
 
+use Illuminate\Console\View\Components\Task;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Spatie\Permission\Contracts\Role;
-
 class Stage extends Model
 {
     use HasFactory;
 
-    public function requests(): BelongsToMany
+    public function request(): BelongsTo
     {
-        return $this->belongsToMany(Request::class,'request_stages');
+        return $this->belongsTo(Request::class);
     }
-
-    public function bill(): BelongsTo
+    public function stageType(): BelongsTo
     {
-        return $this->belongsTo(Bill::class);
+        return $this->belongsTo(StageType::class);
     }
-
-    public function form(): BelongsTo
+    public function payment(): BelongsTo
     {
-        return $this->belongsTo(Form::class);
+        return $this->belongsTo(Payment::class);
     }
-
-    public function roles() : BelongsToMany
+    public function filledForm(): BelongsTo
     {
-        return $this->belongsToMany(Role::class,'stage_roles');
+        return $this->belongsTo(FilledForm::class);
     }
-
-    public function assignments() : HasMany
+    public function tasks() : HasMany
     {
-        return $this->hasMany(Assignment::class);
+        return $this->hasMany(Task::class);
     }
 }

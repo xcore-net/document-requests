@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class FilledForm extends Model
 {
@@ -22,5 +23,10 @@ class FilledForm extends Model
     public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class);
+    }
+    
+    public function stage(): HasOne
+    {
+        return $this->hasOne(Stage::class);
     }
 }

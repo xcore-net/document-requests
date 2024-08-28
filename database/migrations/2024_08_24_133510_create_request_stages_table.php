@@ -20,8 +20,8 @@ return new class extends Migration
 
             $table->timestamps();
 
-            $table->foreign('request_id')->references('id')->on('requests');
-            $table->foreign('stage_id')->references('id')->on('stages');
+            $table->foreign('request_id')->references('id')->on('request_types');
+            $table->foreign('stage_id')->references('id')->on('stage_types');
         });
     }
 

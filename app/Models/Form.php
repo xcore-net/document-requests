@@ -16,8 +16,8 @@ class Form extends Model
         return $this->hasMany(FilledForm::class);
     }
 
-    public function stages(): HasMany
+    public function stageTypes(): HasMany
     {
-        return $this->hasMany(Stage::class);
+        return $this->hasMany(StageType::class);
     }
 }
