@@ -4,17 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 
 class Request extends Model
 {
     use HasFactory;
-    public function stages():BelongsToMany{
-        return $this->belongsToMany(Request::class,'request_stages');
+    public function stages():HasMany{
+        return $this->hasMany(Stage::class);
+    }
+    public function requestType():BelongsTo{
+        return $this->belongsTo(RequestType::class);
     }
 
-    public function clients(): BelongsToMany
+    public function client(): BelongsTo
     {
-        return $this->belongsToMany(Request::class,'client_requests');
+        return $this->belongsTo(Client::class);
     }
 }

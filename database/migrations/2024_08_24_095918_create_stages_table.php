@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('stages', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->unsignedBigInteger('user_id'); 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('stage_type_id'); 
+            $table->foreign('stage_type_id')->references('id')->on('stage_types');
 
-            $table->unsignedBigInteger('bill_id'); 
-            $table->foreign('bill_id')->references('id')->on('bills');
+            $table->unsignedBigInteger('payment_id'); 
+            $table->foreign('payment_id')->references('id')->on('payments');
 
-            $table->unsignedBigInteger('form_id'); 
-            $table->foreign('form_id')->references('id')->on('forms');
+            $table->unsignedBigInteger('filled_form_id'); 
+            $table->foreign('filled_form_id')->references('id')->on('filled_forms');
 
             $table->unsignedBigInteger('request_id'); 
             $table->foreign('request_id')->references('id')->on('requests');

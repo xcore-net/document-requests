@@ -13,9 +13,15 @@ return new class extends Migration
     {
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->integer('current_stage');
+
+            $table->unsignedBigInteger('request_type_id'); 
+            $table->foreign('request_type_id')->references('id')->on('request_types');
+
             $table->enum('status',['inprogress','completed']);
-            $table->unsignedBigInteger('user_id'); 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('client_id'); 
+            $table->foreign('client_id')->references('id')->on('clients');
             $table->timestamps();
         });
     }

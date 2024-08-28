@@ -9,5 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class UploadedFile extends Model
 {
     use HasFactory;
-   
+    public function filledform(): BelongsTo
+    {
+        return $this->belongsTo(FilledForm::class);
+    }
 }

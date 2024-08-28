@@ -7,12 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Bill extends Model
+
+
+class RequestType extends Model
 {
     use HasFactory;
-   
-    public function stages(): HasMany
+    public function stageType():BelongsToMany{
+        return $this->belongsToMany(StageType::class,'request_stages');
+    }
+    public function requests(): HasMany
     {
-        return $this->hasMany(StageType::class);
+        return $this->hasMany(Request::class);
     }
 }

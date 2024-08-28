@@ -4,24 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Client extends Model
 {
     use HasFactory;
-    public function requests(): BelongsToMany
+    public function requests(): HasMany
     {
-        return $this->belongsToMany(Request::class,'client_requests');
+        return $this->HasMany(Request::class);
     }
 
-    public function bills(): BelongsToMany
+    public function payments():HasMany
     {
-        return $this->belongsToMany(Bill::class,'payments');
+        return $this->HasMany(Payment::class);
     }
-    public function forms(): BelongsToMany
+    public function filledforms(): HasMany
     {
-        return $this->belongsToMany(Form::class,'filled_forms');
+        return $this->HasMany(FilledForm::class);
     }  
     public function uploadedFiles(): HasManyThrough
     {

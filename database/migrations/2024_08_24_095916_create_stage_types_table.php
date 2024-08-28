@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stage_roles', function (Blueprint $table) {
-            $table->id();
+        Schema::create('stage_types', function (Blueprint $table) {
+            $table->id('id');
             $table->string('name');
-            $table->unsignedBigInteger('stage_id'); 
-            $table->foreign('stage_id')->references('id')->on('stages');
 
-          
+            $table->unsignedBigInteger('bill_id'); 
+            $table->foreign('bill_id')->references('id')->on('bills');
+
+            $table->unsignedBigInteger('form_id'); 
+            $table->foreign('form_id')->references('id')->on('forms');
+
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stage_roles');
+        Schema::dropIfExists('stage_types');
     }
 };

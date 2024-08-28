@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 
-class Assignment extends Model
+class Task extends Model
 {
     use HasFactory;
     public function user(): BelongsTo
@@ -20,8 +20,5 @@ class Assignment extends Model
         return $this->belongsTo(Stage::class);
     }
 
-    public function notification(): BelongsTo
-    {
-        return $this->belongsTo(NotificationTemplete::class);
-    }
+ 
 }

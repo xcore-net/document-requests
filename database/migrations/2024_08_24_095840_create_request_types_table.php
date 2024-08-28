@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stage_roles', function (Blueprint $table) {
+        Schema::create('request_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('stage_id'); 
-            $table->foreign('stage_id')->references('id')->on('stages');
-
-          
             $table->timestamps();
         });
     }
@@ -27,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stage_roles');
+        Schema::dropIfExists('request_types');
     }
 };

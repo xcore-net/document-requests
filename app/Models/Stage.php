@@ -11,27 +11,27 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Stage extends Model
 {
     use HasFactory;
-    public function requests(): BelongsToMany
+    public function requests(): BelongsTo
     {
-        return $this->belongsToMany(Request::class,'request_stages');
+        return $this->belongsTo(Request::class);
     }
 
-    public function bill(): belongsTo
+    public function payments(): BelongsTo
     {
-        return $this->belongsTo(Bill::class);
+        return $this->belongsTo(Payment::class);
     }
 
-    public function form(): belongsTo
+    public function filledform(): BelongsTo
     {
-        return $this->belongsTo(Form::class);
+        return $this->belongsTo(FilledForm::class);
     }
-    public function roles(): BelongsToMany
+    public function stagetype(): BelongsTo
     {
-        return $this->belongsToMany(Role::class,'stage_roles');
+        return $this->belongsTo(StageType::class);
     }
-    public function assigments(): HasMany
+    public function tasks(): HasMany
     {
-        return $this->HasMany(Assignment::class,);
+        return $this->HasMany(Task::class,);
     }
 
 }
