@@ -10,6 +10,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Stage extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'stage_type_id',
+        'request_id',
+    ];
 
     public function request(): BelongsTo
     {

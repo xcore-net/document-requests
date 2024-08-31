@@ -11,7 +11,14 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Task extends Model
 {
     use HasFactory;
-
+    protected $fillable = [
+        'name',
+        'user_id',
+        'stage_id',
+        'assigned_by',
+        'type',
+        'status',
+    ];
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

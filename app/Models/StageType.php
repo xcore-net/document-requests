@@ -11,13 +11,18 @@ use Spatie\Permission\Models\Role;
 class StageType extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'name',
+        'role'
+    ];
+
     public function requestTypes(): BelongsToMany
     {
-        return $this->belongsToMany(RequestType::class,'request_stages');
+        return $this->belongsToMany(RequestType::class, 'request_stages');
     }
 
-    public function roles() : BelongsToMany
+    public function roles(): BelongsToMany
     {
-        return $this->belongsToMany(Role::class,'stage_roles');
+        return $this->belongsToMany(Role::class, 'stage_roles');
     }
 }

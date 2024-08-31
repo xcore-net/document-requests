@@ -17,6 +17,7 @@ class ApiAuthController extends Controller
             'password' => ['required', 'min:8'],
             'name' => ['required', 'string'],
             'address' => ['required', 'string'],
+            'isEmployee' => ['required', 'boolean'],
         ]);
 
         $data['password'] = bcrypt($data['password']);
@@ -32,7 +33,7 @@ class ApiAuthController extends Controller
     public function login(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'email' => ['required', 'email', 'exists:user'],
+            'email' => ['required', 'email', 'exists:users'],
             'password' => ['required', 'min:8'],
         ]);
 

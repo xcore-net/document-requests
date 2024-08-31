@@ -9,7 +9,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Form extends Model
 {
     use HasFactory;
-
+    protected $fillable = [
+        'name'
+    ];
+    
     public function filledForms(): HasMany
     {
         return $this->hasMany(FilledForm::class);

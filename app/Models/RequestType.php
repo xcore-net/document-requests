@@ -11,13 +11,19 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class RequestType extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'name',
+        'form_id',
+        'bill_id'
+    ];
+
     public function requests(): HasMany
     {
         return $this->hasMany(Request::class);
     }
     public function stageTypes(): BelongsToMany
     {
-        return $this->belongsToMany(StageType::class,'request_stages');
+        return $this->belongsToMany(StageType::class, 'request_stages');
     }
     public function bill(): BelongsTo
     {

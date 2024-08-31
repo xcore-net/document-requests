@@ -9,7 +9,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Bill extends Model
 {
     use HasFactory;
-
+    protected $fillable = [
+        'name',
+        'amount'
+    ];
+    
     public function RequestTypes(): HasMany
     {
         return $this->hasMany(RequestType::class);
@@ -19,5 +23,4 @@ class Bill extends Model
     {
         return $this->hasMany(Payment::class);
     }
-    
 }

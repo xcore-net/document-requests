@@ -11,7 +11,12 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Request extends Model
 {
     use HasFactory;
-
+    protected $fillable = [
+        'request_type_id',
+        'client_id',
+        'status',
+        'current_stage',
+    ];
     public function requestType(): BelongsTo
     {
         return $this->belongsTo(RequestType::class);

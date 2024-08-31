@@ -10,7 +10,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Payment extends Model
 {
     use HasFactory;
-
+    protected $fillable = [
+        'bill_id',
+        'request_id'
+    ];
     public function bill(): BelongsTo
     {
         return $this->belongsTo(Bill::class);

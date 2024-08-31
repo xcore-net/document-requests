@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class FilledForm extends Model
 {
     use HasFactory;
-
+    protected $fillable = [
+        'form_id',
+        'request_id'
+    ];
     public function uploadedFiles(): HasMany
     {
         return $this->hasMany(UploadedFile::class);

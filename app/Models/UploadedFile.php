@@ -9,6 +9,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class UploadedFile extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'name',
+        'filled_form_id',
+        'type'
+    ];
     public function filledForm(): BelongsTo
     {
         return $this->belongsTo(Bill::class);
