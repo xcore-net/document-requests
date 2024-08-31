@@ -15,15 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->unsignedBigInteger('request_id');
-            $table->unsignedBigInteger('filled_form_id')->nullable();
-            $table->unsignedBigInteger('payment_id')->nullable();
             
             $table->enum('status',['inProgress','completed','failed']);
             $table->timestamps();
 
             $table->foreign('request_id')->references('id')->on('requests');
-            $table->foreign('filled_form_id')->references('id')->on('filled_forms');
-            $table->foreign('payment_id')->references('id')->on('payments');
         });
     }
 

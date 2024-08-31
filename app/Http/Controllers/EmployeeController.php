@@ -18,7 +18,7 @@ class EmployeeController extends Controller
     {
         return view('employee.create');
     }
-    public function store(Request $request):RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         Employee::create([
             'father_name' => $request->fatherName,
@@ -26,10 +26,9 @@ class EmployeeController extends Controller
             'position' => $request->position,
             'salary' => $request->address,
             'certificate' => $request->certificate,
-            
-        $table->integer('national_number');
+            'national_number' => $request->nationalNumber,
         ]);
 
-        return redirect('department.index');
+        return redirect('employee.index');
     }
 }

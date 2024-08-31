@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
@@ -16,16 +15,16 @@ class Client extends Model
     {
         return $this->hasMany(Request::class);
     }
-    public function payments(): HasMany
+    public function payments(): HasManyThrough
     {
-        return $this->hasMany(Bill::class, 'payments');
+        return $this->hasManyThrough(Payment::class,Request::class);
     }
-    public function filledForms(): HasMany
+    public function filledForms(): HasManyThrough
     {
-        return $this->hasMany(FilledForm::class);
+        return $this->hasManyThrough(FilledForm::class,Request::class);
     }
-    public function uploadedFiles(): HasManyThrough
-    {
-        return $this->hasManyThrough(UploadedFile::class, FilledForm::class);
-    }
+    // public function uploadedFiles(): HasManyThrough
+    // {
+    //     return $this->hasMan(UploadedFile::class, FilledForm::class);
+    // }
 }

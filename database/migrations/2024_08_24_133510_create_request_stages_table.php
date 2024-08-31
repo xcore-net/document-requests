@@ -17,7 +17,6 @@ return new class extends Migration
             $table->unsignedBigInteger('stage_id');
             $table->unsignedBigInteger('order');
 
-
             $table->timestamps();
 
             $table->foreign('request_id')->references('id')->on('request_types');

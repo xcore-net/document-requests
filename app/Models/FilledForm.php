@@ -12,21 +12,16 @@ class FilledForm extends Model
 {
     use HasFactory;
 
-    public function uploadedFiles():HasMany{
+    public function uploadedFiles(): HasMany
+    {
         return $this->hasMany(UploadedFile::class);
     }
-
     public function form(): BelongsTo
     {
         return $this->belongsTo(Form::class);
     }
-    public function client(): BelongsTo
+    public function request(): BelongsTo
     {
-        return $this->belongsTo(Client::class);
-    }
-    
-    public function stage(): HasOne
-    {
-        return $this->hasOne(Stage::class);
+        return $this->belongsTo(Request::class);
     }
 }

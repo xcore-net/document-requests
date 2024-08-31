@@ -26,5 +26,4 @@ class Task extends Model
     {
         return $this->belongsTo(NotificationTemplate::class);
     }
-    
 }

@@ -19,14 +19,6 @@ class Stage extends Model
     {
         return $this->belongsTo(StageType::class);
     }
-    public function payment(): BelongsTo
-    {
-        return $this->belongsTo(Payment::class);
-    }
-    public function filledForm(): BelongsTo
-    {
-        return $this->belongsTo(FilledForm::class);
-    }
     public function tasks() : HasMany
     {
         return $this->hasMany(Task::class);
