@@ -11,13 +11,18 @@ class Form extends Model
 {
     use HasFactory;
     
+    protected $fillable = [
+        'name'
+    ];
+    
     public function filledForms(): HasMany
     {
         return $this->hasMany(FilledForm::class);
     }
-    public function stageTypes(): HasMany
+
+    public function RequestTypes(): HasMany
     {
-        return $this->hasMany(StageType::class);
+        return $this->hasMany(RequestType::class);
     }
 
   

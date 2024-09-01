@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id')->primary(); 
             $table->foreign('id')->references('id')->on('users'); 
 
+           
             $table->string('first_name');
             $table->string('last_name');
             $table->string('mother_name');

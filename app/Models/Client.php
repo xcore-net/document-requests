@@ -12,19 +12,18 @@ class Client extends Model
     use HasFactory;
     public function requests(): HasMany
     {
-        return $this->HasMany(Request::class);
+        return $this->hasMany(Request::class);
     }
-
-    public function payments():HasMany
+    public function payments(): HasManyThrough
     {
-        return $this->HasMany(Payment::class);
+        return $this->hasManyThrough(Payment::class,Request::class);
     }
-    public function filledforms(): HasMany
+    public function filledForms(): HasManyThrough
     {
-        return $this->HasMany(FilledForm::class);
-    }  
-    public function uploadedFiles(): HasManyThrough
-    {
-        return $this->hasManyThrough(UploadedFile::class, FilledForm::class);
-    }
+        return $this->hasManyThrough(FilledForm::class,Request::class);
+    } 
+    // public function uploadedFiles(): HasManyThrough
+    // {
+    //     return $this->hasManyThrough(UploadedFile::class, FilledForm::class);
+    // }
 }

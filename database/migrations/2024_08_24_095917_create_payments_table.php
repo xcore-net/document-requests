@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id('id');
-            $table->unsignedBigInteger('client_id'); 
-            $table->foreign('client_id')->references('id')->on('clients');
+            $table->unsignedBigInteger('request_id'); 
+            $table->foreign('request_id')->references('id')->on('requests');
 
             $table->unsignedBigInteger('bill_id'); 
             $table->foreign('bill_id')->references('id')->on('bills');

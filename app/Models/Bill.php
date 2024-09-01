@@ -11,8 +11,18 @@ class Bill extends Model
 {
     use HasFactory;
    
-    public function stages(): HasMany
+    protected $fillable = [
+        'name',
+        'amount'
+    ];
+    
+    public function RequestTypes(): HasMany
     {
-        return $this->hasMany(StageType::class);
+        return $this->hasMany(RequestType::class);
+    }
+
+    public function payment(): HasMany
+    {
+        return $this->hasMany(Payment::class);
     }
 }

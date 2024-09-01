@@ -9,12 +9,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Payment extends Model
 {
     use HasFactory;
-    public function clients(): BelongsTo
-    {
-        return $this->belongsTo(Client::class);
-    }
+    protected $fillable = [
+        'bill_id',
+        'request_id'
+    ];
     public function bill(): BelongsTo
     {
         return $this->belongsTo(Bill::class);
+    }
+    public function request(): BelongsTo
+    {
+        return $this->belongsTo(Request::class);
     }
 }

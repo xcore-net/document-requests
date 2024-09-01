@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreign('request_type_id')->references('id')->on('request_types');
 
             $table->enum('status',['inprogress','completed']);
+            
             $table->unsignedBigInteger('client_id'); 
             $table->foreign('client_id')->references('id')->on('clients');
             $table->timestamps();

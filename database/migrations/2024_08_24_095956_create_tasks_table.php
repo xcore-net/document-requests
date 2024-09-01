@@ -20,6 +20,10 @@ return new class extends Migration
             $table->unsignedBigInteger('stage_id')->nullable(); 
             $table->foreign('stage_id')->references('id')->on('stages');
 
+
+            $table->unsignedBigInteger('assigned_by')->nullable();
+            $table->foreign('assigned_by')->references('id')->on('users'); 
+            
             $table->unsignedBigInteger('user_id')->nullable(); 
             $table->foreign('user_id')->references('id')->on('users');
 

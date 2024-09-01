@@ -10,17 +10,20 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class FilledForm extends Model
 {
     use HasFactory;
-    public function uploadedFiles():HasMany
+    protected $fillable = [
+        'form_id',
+        'request_id'
+    ];
+    public function uploadedFiles(): HasMany
     {
         return $this->hasMany(UploadedFile::class);
     }
-
     public function form(): BelongsTo
     {
         return $this->belongsTo(Form::class);
     }
-    public function client(): BelongsTo
+    public function request(): BelongsTo
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Request::class);
     }
 }

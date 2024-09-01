@@ -19,6 +19,8 @@ return new class extends Migration
             $table->unsignedBigInteger('department_id'); 
             $table->foreign('department_id')->references('id')->on('departments');
 
+            $table->enum('position', ['junior', 'senior']);
+
             $table->string('first_name');
             $table->string('last_name');
             $table->string('mother_name');
@@ -27,7 +29,7 @@ return new class extends Migration
             $table->enum('certificate',['university','institute','baccalaureate','preparatory']);
             $table->integer('national_number');
             $table->integer('salary');
-            $table->string('position');
+        
 
 
             $table->timestamps();

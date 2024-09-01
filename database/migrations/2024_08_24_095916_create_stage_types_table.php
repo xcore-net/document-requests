@@ -14,12 +14,9 @@ return new class extends Migration
         Schema::create('stage_types', function (Blueprint $table) {
             $table->id('id');
             $table->string('name');
+            $table->string('role');
 
-            $table->unsignedBigInteger('bill_id'); 
-            $table->foreign('bill_id')->references('id')->on('bills');
-
-            $table->unsignedBigInteger('form_id'); 
-            $table->foreign('form_id')->references('id')->on('forms');
+         
 
             $table->timestamps();
         });
