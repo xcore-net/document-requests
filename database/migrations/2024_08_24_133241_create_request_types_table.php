@@ -19,7 +19,8 @@ return new class extends Migration
             $table->foreign('form_id')->references('id')->on('forms');
             $table->unsignedBigInteger('bill_id');
             $table->foreign('bill_id')->references('id')->on('bills');
-
+            
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -5,6 +5,7 @@ use App\Http\Controllers\api\ApiBillController;
 use App\Http\Controllers\api\ApiFormController;
 use App\Http\Controllers\api\ApiRequestController;
 use App\Http\Controllers\api\ApiRequestTypeController;
+use App\Http\Controllers\api\ApiStageTypeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,10 +34,23 @@ Route::middleware(['auth:sanctum'])->group(
         
         //Request type
         Route::get('request-types', [ApiRequestTypeController::class, 'getAllRequestTypes']);
-        Route::get('request-types/{id}', [ApiRequestTypeController::class, 'getRequestType']);
+        Route::get('request-type/{id}', [ApiRequestTypeController::class, 'getRequestType']);
         Route::post('request-type', [ApiRequestTypeController::class, 'createRequestType']);
         Route::put('request-type/{id}', [ApiRequestTypeController::class, 'updateRequestType']);
         Route::delete('request-type/{id}', [ApiRequestTypeController::class, 'deleteRequestType']);
+
+        
+        Route::post('request-type/{id}/add-stages', [ApiRequestTypeController::class, 'addStages']);
+        Route::post('request-type/{id}/add-stage', [ApiRequestTypeController::class, 'addStage']);
+        Route::post('request-type/{id}/remove-all-stages', [ApiRequestTypeController::class, 'removeAllStages']);
+        Route::post('request-type/{id}/remove-stage', [ApiRequestTypeController::class, 'removeStage']);
+
+        //Stage type
+        Route::get('stage-types', [ApiStageTypeController::class, 'getAllStageTypes']);
+        Route::get('stage-types/{id}', [ApiStageTypeController::class, 'getStageType']);
+        Route::post('stage-type', [ApiStageTypeController::class, 'createStageType']);
+        Route::put('stage-type/{id}', [ApiStageTypeController::class, 'updateStageType']);
+        Route::delete('stage-type/{id}', [ApiStageTypeController::class, 'deleteStageType']);
 
         //Request
         Route::get('user/requests', [ApiRequestController::class, 'getUserRequests']);
@@ -46,7 +60,8 @@ Route::middleware(['auth:sanctum'])->group(
         
         Route::get('work/requests', [ApiRequestController::class, 'getRequests']);
         Route::get('work/requests/active', [ApiRequestController::class, 'getActiveRequests']);
-        Route::get('work/requests/archived', [ApiRequestController::class, 'getActiveRequests']);
+        Route::get('work/requests/archived', [ApiRequestController::class, 'getArchivedRequests']);
         Route::get('work/requests/{id}', [ApiRequestController::class, 'getRequest']);
+
     }
 );

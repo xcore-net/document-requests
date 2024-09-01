@@ -59,8 +59,8 @@ class ApiBillController extends Controller
         $bill = Bill::find($id);
 
         if ($bill) {
-            $bill->delete();
-            return response()->json(['message' => 'Bill deleted.'], 200);
+            $bill->softDeletes();
+            return response()->json(['message' => 'Bill soft deleted.'], 200);
         }
 
         return response()->json(['message' => 'Bill not found.'], 404);

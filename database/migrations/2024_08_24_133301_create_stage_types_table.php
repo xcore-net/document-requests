@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('stage_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('role');
 
+            $table->softDeletes();
             $table->timestamps();    
         });
     }
