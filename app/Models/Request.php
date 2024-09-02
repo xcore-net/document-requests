@@ -14,6 +14,7 @@ class Request extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'title',
         'request_type_id',
         'client_id',
         'status',

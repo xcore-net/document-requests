@@ -12,6 +12,7 @@ class Stage extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'title',
         'stage_type_id',
         'request_id',
     ];

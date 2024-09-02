@@ -15,6 +15,7 @@ class RequestType extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'id',
         'name',
         'form_id',
         'bill_id'

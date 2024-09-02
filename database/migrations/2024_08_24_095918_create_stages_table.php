@@ -17,11 +17,11 @@ return new class extends Migration
             $table->unsignedBigInteger('stage_type_id'); 
             $table->foreign('stage_type_id')->references('id')->on('stage_types');
 
-            $table->unsignedBigInteger('payment_id'); 
-            $table->foreign('payment_id')->references('id')->on('payments');
+            // $table->unsignedBigInteger('payment_id'); 
+            // $table->foreign('payment_id')->references('id')->on('payments');
 
-            $table->unsignedBigInteger('filled_form_id'); 
-            $table->foreign('filled_form_id')->references('id')->on('filled_forms');
+            // $table->unsignedBigInteger('filled_form_id'); 
+            // $table->foreign('filled_form_id')->references('id')->on('filled_forms');
 
             $table->unsignedBigInteger('request_id'); 
             $table->foreign('request_id')->references('id')->on('requests');
