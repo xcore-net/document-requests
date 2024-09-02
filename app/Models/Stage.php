@@ -6,13 +6,20 @@ use Illuminate\Console\View\Components\Task;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+
 class Stage extends Model
 {
     use HasFactory;
     protected $fillable = [
         'stage_type_id',
         'request_id',
+        'order',
+        'name',
+        'role',
+        'type',
+        'name',
+        'status',
     ];
 
     public function request(): BelongsTo
@@ -23,8 +30,8 @@ class Stage extends Model
     {
         return $this->belongsTo(StageType::class);
     }
-    public function tasks() : HasMany
+    public function task(): HasOne
     {
-        return $this->hasMany(Task::class);
+        return $this->hasOne(Task::class);
     }
 }

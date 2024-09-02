@@ -14,7 +14,9 @@ class StageType extends Model
     use HasFactory, SoftDeletes;
     protected $fillable = [
         'name',
-        'role'
+        'role',
+        'isForClient',
+        'type',
     ];
 
     public function requestTypes(): BelongsToMany

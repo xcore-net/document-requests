@@ -6,6 +6,7 @@ use App\Http\Controllers\api\ApiFormController;
 use App\Http\Controllers\api\ApiRequestController;
 use App\Http\Controllers\api\ApiRequestTypeController;
 use App\Http\Controllers\api\ApiStageTypeController;
+use App\Http\Controllers\api\ApiTaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -61,7 +62,15 @@ Route::middleware(['auth:sanctum'])->group(
         Route::get('work/requests', [ApiRequestController::class, 'getRequests']);
         Route::get('work/requests/active', [ApiRequestController::class, 'getActiveRequests']);
         Route::get('work/requests/archived', [ApiRequestController::class, 'getArchivedRequests']);
-        Route::get('work/requests/{id}', [ApiRequestController::class, 'getRequest']);
+        Route::get('work/request/{id}', [ApiRequestController::class, 'getRequest']);
 
+        //Task
+        Route::get('work/tasks', [ApiTaskController::class, 'getTasks']);
+        Route::get('work/tasks/active', [ApiTaskController::class, 'getActiveTasks']);
+        Route::get('work/tasks/archived', [ApiTaskController::class, 'getArchivedTasks']);
+        Route::get('work/task/{id}', [ApiTaskController::class, 'getTask']);
+
+        Route::get('work/task/{task_id}/assign/{user_id}', [ApiTaskController::class, 'assignTask']);
+        Route::get('work/task/{id}/control/{action}', [ApiTaskController::class, 'controlTask']);
     }
 );

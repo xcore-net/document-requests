@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('request_stages', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('request_type_id');
-            $table->unsignedBigInteger('stage_type_id');
             $table->unsignedBigInteger('order');
 
-            $table->timestamps();
-
+            $table->unsignedBigInteger('request_type_id');
             $table->foreign('request_type_id')->references('id')->on('request_types');
+
+            $table->unsignedBigInteger('stage_type_id');
             $table->foreign('stage_type_id')->references('id')->on('stage_types');
+
+            $table->timestamps();
         });
     }
 

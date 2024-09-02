@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('role');
+            $table->boolean('isForClient')->default(false);
+            $table->enum('type',['fill','pay','check','observe']);
 
             $table->softDeletes();
             $table->timestamps();    

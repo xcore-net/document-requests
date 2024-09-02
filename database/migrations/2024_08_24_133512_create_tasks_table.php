@@ -13,11 +13,6 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            
-            $table->string('name');
-            $table->enum('type',['fill','pay','check','observe']);
-            $table->enum('status',['pending','inProgress','completed','failed']);
-
             $table->unsignedBigInteger('stage_id');
             $table->foreign('stage_id')->references('id')->on('stages');
 

@@ -32,6 +32,8 @@ class ApiStageTypeController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string'],
             'role' => ['required', 'string'],
+            'type' => ['required', 'in:fill,pay,check,observe'],
+            'isForClient' => ['boolean'],
         ]);
 
         StageType::create($data);
@@ -42,8 +44,10 @@ class ApiStageTypeController extends Controller
     public function updateStageType(Request $request, $id): JsonResponse
     {
         $data = $request->validate([
-            'name' => ['required', 'string'],
-            'role' => ['required', 'string'],
+            'name' => ['sometimes','required', 'string'],
+            'role' => ['sometimes','required', 'string'],
+            'type' => ['sometimes','required', 'in:fill,pay,check,observe'],    
+            'isForClient' => ['sometimes','boolean'],
         ]);
 
         $stage = StageType::find($id);

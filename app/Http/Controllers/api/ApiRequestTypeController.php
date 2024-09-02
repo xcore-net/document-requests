@@ -27,7 +27,6 @@ class ApiRequestTypeController extends Controller
             'name' => ['required', 'string'],
             'form_id' => ['required', 'exists:forms,id'],
             'bill_id' => ['required', 'exists:bills,id'],
-            'stage_id' => ['nullable', 'exists:stageTypes,id'],
             'stage_ids' => ['nullable', 'array'],
             'stage_ids.*' => ['exists:stage_types,id']
         ]);
@@ -99,31 +98,7 @@ class ApiRequestTypeController extends Controller
         return response()->json(['message' => 'Request type not found.'], 404);
     }
     //gpt generated code below. review needed 
-    public function attachStages(Request $request, RequestType $requestType)
-    {
-        $data = $request->validate([
-            'stage_ids' => ['required', 'array'],
-            'stage_ids.*' => ['exists:stage_types,id'],
-        ]);
 
-        $stage_ids = $data['stage_ids'];
-
-        // Check if any of the stage IDs already exist in the pivot table; notice:check later
-        $existingStages = $requestType->stageTypes->whereIn('stage_id', $stage_ids)->pluck('stage_id')->toArray();
-
-        if (!empty($existingStages)) {
-            return response()->json(['message' => 'One or more stages already exist.', 'existing_stages' => $existingStages], 400);
-        }
-
-        $order = $requestType->stageTypes->count();
-
-        foreach ($stage_ids as $stage_id) {
-            $order++;
-            $requestType->stageTypes()->attach($stage_id, ['order' => $order]);
-        }
-
-        return null; //indicate success
-    }
     public function addStage(Request $request, $id)
     {
         $data = $request->validate([
@@ -210,5 +185,30 @@ class ApiRequestTypeController extends Controller
         }
 
         return response()->json(['message' => 'Request type not found.'], 404);
+    }
+    public function attachStages(Request $request, RequestType $requestType)
+    {
+        $data = $request->validate([
+            'stage_ids' => ['required', 'array'],
+            'stage_ids.*' => ['exists:stage_types,id'],
+        ]);
+
+        $stage_ids = $data['stage_ids'];
+
+        // Check if any of the stage IDs already exist in the pivot table; notice:check later
+        $existingStages = $requestType->stageTypes->whereIn('stage_id', $stage_ids)->pluck('stage_id')->toArray();
+
+        if (!empty($existingStages)) {
+            return response()->json(['message' => 'One or more stages already exist.', 'existing_stages' => $existingStages], 400);
+        }
+
+        $order = $requestType->stageTypes->count();
+
+        foreach ($stage_ids as $stage_id) {
+            $order++;
+            $requestType->stageTypes()->attach($stage_id, ['order' => $order]);
+        }
+
+        return null; //indicate success
     }
 }

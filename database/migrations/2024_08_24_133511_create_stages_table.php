@@ -14,12 +14,16 @@ return new class extends Migration
         Schema::create('stages', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('request_id');
-            
-            $table->enum('status',['inProgress','completed','failed']);
-            $table->timestamps();
+            $table->unsignedInteger('order');
+            $table->string('role');
+            $table->string('type');
+            $table->boolean('isForClient');
+            $table->enum('status',['pending','inProgress','completed','failed'])->default('pending');
 
+            $table->unsignedBigInteger('request_id');
             $table->foreign('request_id')->references('id')->on('requests');
+            
+            $table->timestamps();
         });
     }
 
