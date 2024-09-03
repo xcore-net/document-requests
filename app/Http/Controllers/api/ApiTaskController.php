@@ -75,10 +75,17 @@ class ApiTaskController extends Controller
                 $task->stage->status = 'completed';
                 $task->save();
 
-                $currentStage = $clientRequest->currentStage +1;
-                $clientRequest->currentStage = $currentStage;
+                $currentStage = $clientRequest->currentStage;
+
+                if ($currentStage == $clientRequest->stages->count()) {
+                    $clientRequest->status = 'completed';
+                } else {
+                    $currentStage++;
+                    $clientRequest->currentStage = $currentStage;
+                    $this->addTask($clientRequest);
+                }
+
                 $clientRequest->save();
-                $this->addTask($clientRequest);
                 return response()->json(['message' => 'Task completed.'], 200);
             case 'reject':
                 $task->stage->status = 'rejected';
@@ -98,17 +105,18 @@ class ApiTaskController extends Controller
                 return response()->json(['message' => 'Invalid action'], 400);
         }
     }
-    public function addTask($clientRequest){
-        $initialstage = $clientRequest->stages->where('order', $clientRequest->currentStage)->first();
+    public function addTask($clientRequest)
+    {
+        $stage = $clientRequest->stages->where('order', $clientRequest->currentStage)->first();
 
-        if ($initialstage->isForClient) {
+        if ($stage->isForClient) {
             $performer_id = Auth::id();
             $assigner_id = null;
         } else {
             $performer_id = null;
             $assigner_id = null;
         }
-        $initialstage->task->create(['user_id' => $performer_id, 'assigned_by' => $assigner_id]);
+        $stage->task->create(['user_id' => $performer_id, 'assigned_by' => $assigner_id]);
         return;
     }
 }

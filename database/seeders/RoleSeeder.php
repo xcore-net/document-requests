@@ -19,16 +19,16 @@ class RoleSeeder extends Seeder
         $caseWorker = Role::createOrFirst(['name' => 'caseWorker']); 
         $supervisor = Role::createOrFirst(['name' => 'supervisor']); 
 
-        $admin->givePermissionTo([
-            'create-user',
-            'edit-user',
-            'delete-user',
-        ]);
+        // $admin->givePermissionTo([
+        //     'create-user',
+        //     'edit-user',
+        //     'delete-user',
+        // ]);
 
-        $user->givePermissionTo([
-        ]);
+        // $user->givePermissionTo([
+        // ]);
 
-        $employee->givePermissionTo([
-        ]);
+        // $employee->givePermissionTo([
+        // ]);
     }
 }

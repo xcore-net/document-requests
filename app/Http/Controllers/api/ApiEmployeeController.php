@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class ApiEmployeeController extends Controller
 {
-    public function getAllEmployee(): JsonResponse
+    public function getAllEmployees(): JsonResponse
     {
         $employees = Employee::all();
         return response()->json($employees);
