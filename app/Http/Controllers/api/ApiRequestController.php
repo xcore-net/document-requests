@@ -30,13 +30,14 @@ class ApiRequestController extends Controller
 
     public function createUserRequest(Request $request): JsonResponse
     {
-        $requests = ClientRequest::all();
         $data = $request->validate([
             'name' => ['required', 'string'],
             'request_type_id' => ['required', 'exists:request_types,id'],
         ]);
 
-        $clientRequest = ClientRequest::create([...$data, 'client_id' => Auth::id()]);
+        $client = Client::find(Auth::id());
+
+        $clientRequest = ClientRequest::create([...$data, 'client_id' => $client->id]);
         $requestType = $clientRequest->requestType;
 
         $stagesTypes = $requestType->stageTypes;
@@ -54,20 +55,8 @@ class ApiRequestController extends Controller
 
         $taskController->addTask($clientRequest);
 
-        //     $initialstage = $clientRequest->where('order', 1)->first();
-
-        //     if ($initialstage->isForClient) {
-        //         $performer_id = Auth::id();
-        //         $assigner_id = null;
-        //     } else {
-        //         $performer_id = null;
-        //         $assigner_id = null;
-        //     }
-        //     $initialstage->task->create(['user_id' => $performer_id, 'assigned_by' => $assigner_id]);
-
         return response()->json(['message' => 'Request created.'], 201);
     }
-
     //only cancels request
     public function updateUserRequest(Request $request, $id): JsonResponse
     {
@@ -84,6 +73,28 @@ class ApiRequestController extends Controller
         }
 
         return response()->json(['message' => 'Request not found.'], 404);
+    }
+    public function pay($id): JsonResponse
+    {
+        $client = Client::find(Auth::id());
+        $request = $client->requests->find($id);
+
+        if (!$request)
+            return response()->json(['message' => 'Request not found.'], 404);
+        $request->payment->create();
+
+        return response()->json(['message' => 'Payment made.'], 200);
+    }
+    public function fill($id): JsonResponse
+    {
+        $client = Client::find(Auth::id());
+        $request = $client->requests->find($id);
+
+        if (!$request)
+            return response()->json(['message' => 'Request not found.'], 404);
+        $request->form->create();
+
+        return response()->json(['message' => 'Form filled.'], 200);
     }
     //for Employees
     public function getRequests(): JsonResponse
@@ -120,5 +131,47 @@ class ApiRequestController extends Controller
         }
 
         return response()->json(['message' => 'Request not found.'], 404);
+    }
+    public function getRequestForm($id): JsonResponse
+    {
+        $request = ClientRequest::find($id);
+
+        if (!$request) return response()->json(['message' => 'Request not found.'], 404);
+
+        $form = $request->form;
+        return response()->json($form, 200);
+    }
+    public function getRequestBill($id): JsonResponse
+    {
+        $request = ClientRequest::find($id);
+
+        if (!$request) return response()->json(['message' => 'Request not found.'], 404);
+
+        $bill = $request->bill;
+        return response()->json($bill, 200);
+    }
+    public function getRequestFilledForm($id): JsonResponse
+    {
+        $request = ClientRequest::find($id);
+
+        if (!$request) return response()->json(['message' => 'Request not found.'], 404);
+
+        $filledForm = $request->filledForm;
+
+        if (!$filledForm) return response()->json(['message' => 'Filled form not found.'], 404);
+
+        return response()->json($filledForm, 200);
+    }
+    public function getRequestPayment($id): JsonResponse
+    {
+        $request = ClientRequest::find($id);
+
+        if (!$request) return response()->json(['message' => 'Request not found.'], 404);
+
+        $payment = $request->payment;
+
+        if (!$payment) return response()->json(['message' => 'Payment form not found.'], 404);
+
+        return response()->json($payment, 200);
     }
 }

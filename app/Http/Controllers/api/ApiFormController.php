@@ -58,7 +58,7 @@ class ApiFormController extends Controller
         $form = Form::find($id);
 
         if ($form) {
-            $form->SoftDeletes();
+            $form->delete();
             return response()->json(['message' => 'Form soft deteted.'], 200);
         }
         

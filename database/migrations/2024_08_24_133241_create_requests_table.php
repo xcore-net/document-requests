@@ -23,6 +23,12 @@ return new class extends Migration
             $table->unsignedBigInteger('client_id');
             $table->foreign('client_id')->references('id')->on('clients');
             
+            $table->unsignedBigInteger('form_id');
+            $table->foreign('form_id')->references('id')->on('forms');
+
+            $table->unsignedBigInteger('bill_id');
+            $table->foreign('bill_id')->references('id')->on('bills');
+            
             $table->timestamps();
         });
     }

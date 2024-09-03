@@ -3,7 +3,7 @@
 use App\Http\Controllers\api\ApiAuthController;
 use App\Http\Controllers\api\ApiBillController;
 use App\Http\Controllers\api\ApiFormController;
-use App\Http\Controllers\api\ApiRequestController;
+use App\Http\Controllers\Api\ApiRequestController;
 use App\Http\Controllers\api\ApiRequestTypeController;
 use App\Http\Controllers\api\ApiStageTypeController;
 use App\Http\Controllers\api\ApiTaskController;
@@ -39,7 +39,6 @@ Route::middleware(['auth:sanctum'])->group(
         Route::post('request-type', [ApiRequestTypeController::class, 'createRequestType']);
         Route::put('request-type/{id}', [ApiRequestTypeController::class, 'updateRequestType']);
         Route::delete('request-type/{id}', [ApiRequestTypeController::class, 'deleteRequestType']);
-
         
         Route::post('request-type/{id}/add-stages', [ApiRequestTypeController::class, 'addStages']);
         Route::post('request-type/{id}/add-stage', [ApiRequestTypeController::class, 'addStage']);
@@ -58,11 +57,18 @@ Route::middleware(['auth:sanctum'])->group(
         Route::get('user/request/{id}', [ApiRequestController::class, 'getUserRequest']);
         Route::post('user/request', [ApiRequestController::class, 'createUserRequest']);
         Route::put('user/request/{id}', [ApiRequestController::class, 'updateUserRequest']);
-        
+        Route::post('user/request/{id}/pay', [ApiRequestController::class, 'pay']);
+        Route::post('user/request/{id}/fill', [ApiRequestController::class, 'fill']);
+
         Route::get('work/requests', [ApiRequestController::class, 'getRequests']);
         Route::get('work/requests/active', [ApiRequestController::class, 'getActiveRequests']);
         Route::get('work/requests/archived', [ApiRequestController::class, 'getArchivedRequests']);
         Route::get('work/request/{id}', [ApiRequestController::class, 'getRequest']);
+        
+        Route::get('work/request/{id}/form', [ApiRequestController::class, 'getRequestForm']);
+        Route::get('work/request/{id}/bill', [ApiRequestController::class, 'getRequestBill']);
+        Route::get('work/request/{id}/filled-form', [ApiRequestController::class, 'getRequestFilledForm']);
+        Route::get('work/request/{id}/payment', [ApiRequestController::class, 'getRequestPayment']);
 
         //Task
         Route::get('work/tasks', [ApiTaskController::class, 'getTasks']);
@@ -70,6 +76,7 @@ Route::middleware(['auth:sanctum'])->group(
         Route::get('work/tasks/archived', [ApiTaskController::class, 'getArchivedTasks']);
         Route::get('work/task/{id}', [ApiTaskController::class, 'getTask']);
 
+        Route::get('work/task/{task_id}/recieve', [ApiTaskController::class, 'assignTask']);
         Route::get('work/task/{task_id}/assign/{user_id}', [ApiTaskController::class, 'assignTask']);
         Route::get('work/task/{id}/control/{action}', [ApiTaskController::class, 'controlTask']);
     }

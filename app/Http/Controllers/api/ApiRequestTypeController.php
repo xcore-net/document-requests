@@ -14,13 +14,11 @@ class ApiRequestTypeController extends Controller
         $requestTypes = RequestType::all();
         return response()->json($requestTypes);
     }
-
     public function getRequestType($id): JsonResponse
     {
         $requestType = RequestType::find($id);
         return response()->json($requestType);
     }
-
     public function createRequestType(Request $request): JsonResponse
     {
         $data = $request->validate([
@@ -34,23 +32,17 @@ class ApiRequestTypeController extends Controller
         $requestType = RequestType::create($data);
 
         $stage_ids = $data['stage_ids'];
-        $order = $requestType->stageTypes->count();
 
-        // Check if any of the stage IDs already exist in the pivot table; notice:check later
-        $existingStages = $requestType->stageTypes->whereIn('stage_id', $stage_ids)->pluck('stage_id')->toArray();
+        if ($stage_ids) {
+            $response = $this->attachStages($request, $requestType);
 
-        if (!empty($existingStages)) {
-            return response()->json(['message' => 'One or more stages already exist.', 'existing_stages' => $existingStages], 400);
-        }
-
-        foreach ($stage_ids as $stage_id) {
-            $order++;
-            $requestType->stageTypes->attach($stage_id, ['order' => $order]);
+            if ($response) {
+                return $response;
+            }
         }
 
         return response()->json(['message' => 'Request type created.'], 201);
     }
-
     public function updateRequestType(Request $request, $id): JsonResponse
     {
         $data = $request->validate([
@@ -70,19 +62,17 @@ class ApiRequestTypeController extends Controller
 
         return response()->json(['message' => 'Request type not found.'], 404);
     }
-
     public function deleteRequestType($id): JsonResponse
     {
         $requestType = RequestType::find($id);
 
         if ($requestType) {
-            $requestType->softDeletes();
+            $requestType->delete();
             return response()->json(['message' => 'Request type soft deleted.'], 200);
         }
 
         return response()->json(['message' => 'Request type not found.'], 404);
     }
-
     //stages
     public function addStages(Request $request, $id): JsonResponse
     {
@@ -98,7 +88,6 @@ class ApiRequestTypeController extends Controller
         return response()->json(['message' => 'Request type not found.'], 404);
     }
     //gpt generated code below. review needed 
-
     public function addStage(Request $request, $id)
     {
         $data = $request->validate([
@@ -135,7 +124,6 @@ class ApiRequestTypeController extends Controller
 
         return response()->json(['message' => 'Request type not found.'], 404);
     }
-
     public function removeAllStages($id)
     {
         $requestType = RequestType::find($id);

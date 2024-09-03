@@ -65,7 +65,7 @@ class ApiStageTypeController extends Controller
         $stage = StageType::find($id);
 
         if ($stage) {
-            $stage->softDeletes();
+            $stage->delete();
             return response()->json(['message' => 'Stage type soft deteted.'], 200);
         }
 
