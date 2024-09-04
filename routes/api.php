@@ -77,32 +77,36 @@ Route::middleware(['auth:sanctum'])->group(
             Route::put('user/request/{id}', [ApiRequestController::class, 'updateUserRequest']);
             Route::post('user/request/{id}/pay', [ApiRequestController::class, 'pay']);
             Route::post('user/request/{id}/fill', [ApiRequestController::class, 'fill']);
+            Route::post('user/request/{id}/advance', [ApiRequestController::class, 'advance']);
         });
         Route::middleware('Role:employee')->group(function () {
-            Route::get('work/requests', [ApiRequestController::class, 'getRequests']);
-            Route::get('work/requests/active', [ApiRequestController::class, 'getActiveRequests']);
-            Route::get('work/requests/archived', [ApiRequestController::class, 'getArchivedRequests']);
-            Route::get('work/request/{id}', [ApiRequestController::class, 'getRequest']);
+            Route::get('requests', [ApiRequestController::class, 'getRequests']);
+            Route::get('requests/active', [ApiRequestController::class, 'getActiveRequests']);
+            Route::get('requests/archived', [ApiRequestController::class, 'getArchivedRequests']);
+            Route::get('request/{id}', [ApiRequestController::class, 'getRequest']);
 
-            Route::get('work/request/{id}/form', [ApiRequestController::class, 'getRequestForm']);
-            Route::get('work/request/{id}/bill', [ApiRequestController::class, 'getRequestBill']);
-            Route::get('work/request/{id}/filled-form', [ApiRequestController::class, 'getRequestFilledForm']);
-            Route::get('work/request/{id}/payment', [ApiRequestController::class, 'getRequestPayment']);
+            Route::get('request/{id}/form', [ApiRequestController::class, 'getRequestForm']);
+            Route::get('request/{id}/bill', [ApiRequestController::class, 'getRequestBill']);
+            Route::get('request/{id}/filled-form', [ApiRequestController::class, 'getRequestFilledForm']);
+            Route::get('request/{id}/payment', [ApiRequestController::class, 'getRequestPayment']);
         });
 
         //Task
+        Route::middleware('Role:user')->group(function () {
+            Route::get('user/tasks', [ApiTaskController::class, 'getUserTasks']);
+            Route::get('user/task/{id}', [ApiTaskController::class, 'getUserTask']);
+        });
         Route::middleware('Role:employee')->group(function () {
-            Route::get('work/tasks', [ApiTaskController::class, 'getTasks']);
-            Route::get('work/tasks/active', [ApiTaskController::class, 'getActiveTasks']);
-            Route::get('work/tasks/archived', [ApiTaskController::class, 'getArchivedTasks']);
-            Route::get('work/task/{id}', [ApiTaskController::class, 'getTask']);
-
-            Route::get('work/task/{task_id}/recieve', [ApiTaskController::class, 'assignTask']);
-            Route::get('work/task/{task_id}/assign/{user_id}', [ApiTaskController::class, 'assignTask']);
-            Route::get('work/task/{id}/control/{action}', [ApiTaskController::class, 'controlTask']);
+            Route::get('tasks', [ApiTaskController::class, 'getTasks']);
+            Route::get('tasks/active', [ApiTaskController::class, 'getActiveTasks']);
+            Route::get('tasks/archived', [ApiTaskController::class, 'getArchivedTasks']);
+            Route::get('task/{id}', [ApiTaskController::class, 'getTask']);
+            Route::get('task/{task_id}/receive ', [ApiTaskController::class, 'receiveTask']);
+            Route::get('task/{task_id}/assign/{user_id}', [ApiTaskController::class, 'assignTask']);
+            Route::get('task/{id}/control/{action}', [ApiTaskController::class, 'controlTask']);
         });
 
-        // Department
+        //Department
         Route::middleware('Role:admin||employee')->group(function () {
             Route::get('departments', [ApiDepartmentController::class, 'getAllDepartments']);
             Route::get('department/{id}', [ApiDepartmentController::class, 'getDepartment']);
@@ -122,8 +126,8 @@ Route::middleware(['auth:sanctum'])->group(
             Route::delete('employee/{id}', [ApiEmployeeController::class, 'deleteEmployee']);
         });
 
-        // Client
-        Route::middleware('Role:admin||supervisor')->group(function () {
+        //Client
+        Route::middleware('Role:admin||employee')->group(function () {
             Route::get('clients', [ApiClientController::class, 'getAllClients']);
             Route::get('client/{id}', [ApiClientController::class, 'getClient']);
             Route::post('client', [ApiClientController::class, 'createClient']);

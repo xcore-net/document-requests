@@ -12,7 +12,7 @@ class ApiClientController extends Controller
     public function getAllClients(): JsonResponse
     {
         $clients = Client::all();
-        return response()->json($clients);
+        return response()->json($clients,200);
     }
 
     public function getClient($id): JsonResponse
@@ -23,7 +23,7 @@ class ApiClientController extends Controller
             return response()->json(['message' => 'Client not found.'], 404);
         }
 
-        return response()->json($client);
+        return response()->json($client,200);
     }
 
     public function createClient(Request $request): JsonResponse

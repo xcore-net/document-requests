@@ -14,6 +14,8 @@ class ApiRequestController extends Controller
     public function getUserRequests(): JsonResponse
     {
         $client = Client::find(Auth::id());
+        if (!$client) return response()->json(['message' => 'User not a client.'], 404);
+
         $requests = $client->requests;
         return response()->json($requests);
     }
@@ -21,6 +23,8 @@ class ApiRequestController extends Controller
     public function getUserRequest($id): JsonResponse
     {
         $client = Client::find(Auth::id());
+        if (!$client) return response()->json(['message' => 'User not a client.'], 404);
+
         $request = $client->requests->find($id);
         if ($request) {
             return response()->json($request);
@@ -36,6 +40,7 @@ class ApiRequestController extends Controller
         ]);
 
         $client = Client::find(Auth::id());
+        if (!$client) return response()->json(['message' => 'User not a client.'], 404);
 
         $clientRequest = ClientRequest::create([...$data, 'client_id' => $client->id]);
         $requestType = $clientRequest->requestType;
@@ -65,6 +70,8 @@ class ApiRequestController extends Controller
         ]);
 
         $client = Client::find(Auth::id());
+        if (!$client) return response()->json(['message' => 'User not a client.'], 404);
+
         $request = $client->requests->find($id);
 
         if ($request) {
@@ -77,10 +84,12 @@ class ApiRequestController extends Controller
     public function pay($id): JsonResponse
     {
         $client = Client::find(Auth::id());
-        $request = $client->requests->find($id);
+        if (!$client) return response()->json(['message' => 'User not a client.'], 404);
 
+        $request = $client->requests->find($id);
         if (!$request)
             return response()->json(['message' => 'Request not found.'], 404);
+
         $request->payment->create();
 
         return response()->json(['message' => 'Payment made.'], 200);
@@ -88,13 +97,42 @@ class ApiRequestController extends Controller
     public function fill($id): JsonResponse
     {
         $client = Client::find(Auth::id());
-        $request = $client->requests->find($id);
+        if (!$client) return response()->json(['message' => 'User not a client.'], 404);
 
+        $request = $client->requests->find($id);
         if (!$request)
             return response()->json(['message' => 'Request not found.'], 404);
         $request->form->create();
 
         return response()->json(['message' => 'Form filled.'], 200);
+    }
+    public function advance($id): JsonResponse
+    {
+        $client = Client::find(Auth::id());
+        if (!$client) return response()->json(['message' => 'User not a client.'], 404);
+
+        $request = $client->requests->find($id);
+        if (!$request) return response()->json(['message' => 'Request not found.'], 404);
+
+        $currentStage = $request->stages->where('order',$request->current_stage)->first();
+
+        if(!$currentStage->isForClient){
+            return response()->json(['message' => 'User does not have authority to advance current stage.'], 400);
+        }
+        else if($currentStage->task->type == 'fill'){
+            if(!$request->filledForm) return response()->json(['message' => 'User must fill the form.'], 400);
+            
+        }
+        else if($currentStage->task->type == 'pay'){
+            if(!$request->payment) return response()->json(['message' => 'User must fill the form.'], 400);
+        }
+
+        $task = $currentStage->task;
+        $taskController = new ApiTaskController;
+
+        $taskController->advanceTask($task);
+
+        return response()->json(['message' => 'Stage advanced.'], 200);
     }
     //for Employees
     public function getRequests(): JsonResponse

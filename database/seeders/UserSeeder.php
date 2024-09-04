@@ -21,37 +21,34 @@ class UserSeeder extends Seeder
         // ]);
         // $superAdmin->assignRole('superAdmin');
 
-        // // Creating Admin User
-        // $admin = User::create([
-        //     'name' => 'Syed Ahsan Kamal',
-        //     'email' => 'ahsan@allphptricks.com',
-        //     'password' => Hash::make('ahsan1234')
-        // ]);
-        // $admin->assignRole('admin');
+        // Creating Admin User
+        $admin = User::create([
+            'name' => 'Syed Ahsan Kamal',
+            'email' => 'admin@admin.com',
+            'password' => Hash::make('ahsan1234')
+        ]);
+        $admin->assignRole('admin');
 
-        // // Creating Product Manager User
-        // $productManager = User::create([
-        //     'name' => 'product Manager',
-        //     'email' => 'productManager@gmail.com',
-        //     'password' => Hash::make('123456789')
-        // ]);
-        // $productManager->assignRole('productManager');
-
-        // Creating Order Manager User
-        $orderManager = User::create([
-            'name' => 'Order Manager',
-            'email' => 'orderManager@gmail.com',
+        $employee = User::create([
+            'name' => 'employee1',
+            'email' => 'employee@gmail.com',
             'password' => Hash::make('123456789')
         ]);
-        $orderManager->assignRole('orderManager');
+        $employee->assignRole('employee');
 
-        // Creating Payments Manager User
-        $paymentManager = User::create([
-            'name' => 'payment Manager',
-            'email' => 'paymentManager@gmail.com',
+        $caseWoker = User::create([
+            'name' => 'case work',
+            'email' => 'caseWoker@gmail.com',
             'password' => Hash::make('123456789')
         ]);
-        $paymentManager->assignRole('paymentManager');
+        $caseWoker->assignRole('caseWorker');   
+
+        $supervisor = User::create([
+            'name' => 'supervisor',
+            'email' => 'supervisor@gmail.com',
+            'password' => Hash::make('123456789')
+        ]);
+        $caseWoker->assignRole('supervisor');
 
         // Creating Application User
         $user = User::create([

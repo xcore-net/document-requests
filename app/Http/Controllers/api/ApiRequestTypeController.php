@@ -9,15 +9,16 @@ use Illuminate\Http\Request;
 
 class ApiRequestTypeController extends Controller
 {
-    public function getRequestTypes(): JsonResponse
+    public function getAllRequestTypes(): JsonResponse
     {
         $requestTypes = RequestType::all();
-        return response()->json($requestTypes);
+        return response()->json($requestTypes,200);
     }
     public function getRequestType($id): JsonResponse
     {
         $requestType = RequestType::find($id);
-        return response()->json($requestType);
+        if(!$requestType) return response()->json(['Message'=>'Request type not found.'],404);
+        return response()->json($requestType,200);
     }
     public function createRequestType(Request $request): JsonResponse
     {
@@ -68,7 +69,7 @@ class ApiRequestTypeController extends Controller
 
         if ($requestType) {
             $requestType->delete();
-            return response()->json(['message' => 'Request type soft deleted.'], 200);
+            return response()->json(['message' => 'Request type deleted.'], 200);
         }
 
         return response()->json(['message' => 'Request type not found.'], 404);

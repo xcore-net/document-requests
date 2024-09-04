@@ -12,7 +12,7 @@ class ApiBillController extends Controller
     public function getAllBills(): JsonResponse
     {
         $bills = Bill::all();
-        return response()->json($bills);
+        return response()->json($bills,200);
     }
 
     public function getBill($id): JsonResponse
@@ -20,7 +20,7 @@ class ApiBillController extends Controller
         $bill = Bill::find($id);
 
         if ($bill) {
-            return response()->json($bill);
+            return response()->json($bill,200);
         }
 
         return response()->json(['message' => 'Bill not found.'], 404);

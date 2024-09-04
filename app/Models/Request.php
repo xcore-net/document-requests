@@ -37,4 +37,12 @@ class Request extends Model
     {
         return $this->hasOne(FilledForm::class);
     }
+    public function bill(): BelongsTo
+    {
+        return $this->belongsTo(Bill::class);
+    }
+    public function form(): BelongsTo
+    {
+        return $this->belongsTo(Form::class);
+    }
 }

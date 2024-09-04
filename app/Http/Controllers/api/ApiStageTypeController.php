@@ -21,7 +21,7 @@ class ApiStageTypeController extends Controller
         $stage = StageType::find($id);
 
         if ($stage) {
-            return  response()->json($stage);
+            return  response()->json($stage,200);
         }
 
         return response()->json(['message' => 'Stage type not found.'], 404);

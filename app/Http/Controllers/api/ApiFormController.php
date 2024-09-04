@@ -12,7 +12,7 @@ class ApiFormController extends Controller
     public function getAllForms(): JsonResponse
     {
         $forms = Form::all();
-        return  response()->json($forms);
+        return  response()->json($forms,200);
     }
 
     public function getForm($id): JsonResponse
@@ -20,7 +20,7 @@ class ApiFormController extends Controller
         $form = Form::find($id);
 
         if ($form) {
-            return  response()->json($form);
+            return  response()->json($form,200);
         }
 
         return response()->json(['message' => 'From not found.'], 404);
