@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\Task;
 use App\Models\User;
+use App\Notifications\AlertNotification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -74,6 +75,8 @@ class ApiTaskController extends Controller
         $task->user_id = $user;
         $task->assigned_by = Auth::id();
 
+        $user->notify(new AlertNotification('You have new task.'));
+
         return response()->json(['message' => 'Task assigned.'], 200);
     }
     public function receiveTask($task_id): JsonResponse
@@ -87,6 +90,7 @@ class ApiTaskController extends Controller
 
         $task->user_id = $user->id;
         $task->assigned_by = $user->id;
+        $task->save();
 
         return response()->json(['message' => 'Task received.'], 200);
     }
@@ -137,15 +141,18 @@ class ApiTaskController extends Controller
     }
     public function advanceTask($task)
     {
-        $clientRequest =  $task->stage->request;
+        $clientRequest = $task->stage->request;
 
         $task->stage->status = 'completed';
         $task->save();
 
         $currentStage = $clientRequest->currentStage;
 
+        $client = $clientRequest->client;
+
         if ($currentStage == $clientRequest->stages->count()) {
             $clientRequest->status = 'completed';
+            $client->user->notify(new AlertNotification('Request Completed'));
         } else {
             $currentStage++;
             $clientRequest->currentStage = $currentStage;
